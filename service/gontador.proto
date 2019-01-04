@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+// The greeting service definition.
+service Counter {
+  // Sends a greeting
+  rpc Count (Empty) returns (CountReply) {}
+  // Sends another greeting
+  rpc GetCounter (Empty) returns (CountReply) {}
+}
+
+// The response message containing the Counter
+message CountReply {
+  int64 Counter = 1;
+}
+
+message Empty {
+}

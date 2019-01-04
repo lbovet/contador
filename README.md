@@ -37,3 +37,11 @@ Run somewhere
 
     oc delete all -l app=gontador
     oc delete template gontador-template
+
+## Generate grpc service
+
+     PROTOC_ZIP=protoc-3.3.0-osx-x86_64.zip\ncurl -OL https://github.com/google/protobuf/releases/download/v3.3.0/$PROTOC_ZIP\nsudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc\nrm -f $PROTOC_ZIP
+     go get  -u github.com/golang/protobuf/protoc-gen-go
+
+     protoc -I service/ service/gontador.proto --go_out=plugins=grpc:service
+

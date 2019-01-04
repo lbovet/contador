@@ -7,12 +7,28 @@ import (
 	"strconv"
 )
 
-func count(w http.ResponseWriter, r *http.Request) {
-	result, err := redisdb.IncrBy("counter1", 1).Result()
+func get() int64 {
+	result, err := redisdb.Get("counter1").Result()
 	//time.Sleep(5 * time.Second)
 	if err != nil {
 		panic(err)
 	}
+	r64, _ := strconv.ParseInt(result, 10, 64)
+	return r64
+	// return result
+
+}
+
+func incr() int64 {
+	result, err := redisdb.IncrBy("counter1", 1).Result()
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
+
+func count(w http.ResponseWriter, r *http.Request) {
+	result := incr()
 	cs := strconv.FormatInt(result, 10)
 
 	m := fmt.Sprintf("%s.gontador.%s.%s.counter.value",
